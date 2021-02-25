@@ -14,13 +14,9 @@
    [vorstellung.events]
    [vorstellung.common.ajax :as ajax]
    [vorstellung.header :as header]
-   [vorstellung.home.page :as page])
+   [vorstellung.home.page :as page]
+   [vorstellung.home.dashboard :as dashboard])
   (:import goog.History))
-
-(defn home-page []
-  [:section.section>div.container>div.content
-   (when-let [docs @(rf/subscribe [:docs])]
-     [:div {:dangerouslySetInnerHTML {:__html (md->html docs)}}])])
 
 (defn about-page []
   [:div
@@ -29,7 +25,7 @@
 (def router
   (reitit/router
    [["/"        {:name        :home
-                 :view        {:page #'home-page
+                 :view        {:page #'dashboard/page
                                :tool (fn [] [:div])}
                  :controllers [{:start (fn [_] (rf/dispatch [:page/init-home]))}]}]
     ["/about"   {:name        :about
